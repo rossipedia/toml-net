@@ -14,8 +14,8 @@
         private static readonly Regex KeyGroupExpression = new Regex(@"^\[(\w+(\.\w+)*)]$", RegexOptions.Compiled);
         private static readonly Regex ValueExpression = new Regex(@"^([^\s]+)\s*=(.+)$", RegexOptions.Compiled);
 
-        private static readonly Regex IntValueExpression = new Regex(@"^\d+$", RegexOptions.Compiled);
-        private static readonly Regex FloatValueExpression = new Regex(@"^\d+\.\d+?$", RegexOptions.Compiled);
+        private static readonly Regex IntValueExpression = new Regex(@"^-?\d+$", RegexOptions.Compiled);
+        private static readonly Regex FloatValueExpression = new Regex(@"^-?\d+\.\d+?$", RegexOptions.Compiled);
         private static readonly Regex BoolValueExpression = new Regex(@"^(true|false)$", RegexOptions.Compiled);
         private static readonly Regex DateTimeValueExpression = new Regex(@"^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z", RegexOptions.Compiled);
         private static readonly Regex StringValueExpression = new Regex(@"^"".*""$", RegexOptions.Compiled);

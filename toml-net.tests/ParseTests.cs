@@ -52,11 +52,28 @@
         }
 
         [Test]
+        public void ShouldParseNegIntValue()
+        {
+            var config = "foo=-1".ParseAsToml();
+
+            Assert.AreEqual(-1, config.foo);
+        }
+
+        [Test]
         public void ShouldParseFloatValue()
         {
             var config = "foo=1.23".ParseAsToml();
 
             Assert.AreEqual(1.23, config.foo);
+            Assert.IsInstanceOf<double>(config.foo);
+        }
+
+        [Test]
+        public void ShouldParseNegFloatValue()
+        {
+            var config = "foo=-1.23".ParseAsToml();
+
+            Assert.AreEqual(-1.23, config.foo);
         }
 
         [Test]
