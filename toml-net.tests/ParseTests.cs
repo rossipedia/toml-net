@@ -1,6 +1,7 @@
 ﻿namespace Toml.Tests
 {
     using System;
+    using System.IO;
     using System.Linq;
 
     using NUnit.Framework;
@@ -154,35 +155,7 @@
         [Test]
         public void ShouldParseSampleConfig()
         {
-            const string SampleConfig =
-@"# This is a TOML document. Boom.
-
-title = ""TOML Example""
-
-[owner]
-name = ""Tom Preston-Werner""
-organization = ""GitHub""
-bio = ""GitHub Cofounder & CEO\nLikes tater tots and beer.""
-dob = 1979-05-27T07:32:00Z # First class dates? Why not?
-
-[database]
-server = ""192.168.1.1""
-ports = [ ""8001"", ""8001"", ""8002"" ]
-connection_max = 5000
-enabled = true
-
-[servers]
-
-  # You can indent as you please. Tabs or spaces. TOML don't care.
-  [servers.alpha]
-  ip = ""10.0.0.1""
-  dc = ""eqdc10""
-
-  [servers.beta]
-  ip = ""10.0.0.2""
-  dc = ""eqdc10""";
-
-            var config = SampleConfig.ParseAsToml();
+            var config = ParseEmbeddedSampleTomlFile();
 
             Assert.NotNull(config);
             Assert.AreEqual("TOML Example", config.title);
@@ -208,6 +181,15 @@ enabled = true
             Assert.NotNull(config.servers.beta);
             Assert.AreEqual("10.0.0.2", config.servers.beta.ip);
             Assert.AreEqual("eqdc10", config.servers.beta.dc);
+        }
+
+        private static dynamic ParseEmbeddedSampleTomlFile()
+        {
+            var s = typeof(ParseTests).Assembly.GetManifestResourceStream("Toml.Tests.Resources.example.toml");
+            using (var reader = new StreamReader(s))
+            {
+                return reader.ParseAsToml();
+            }
         }
     }
 }
