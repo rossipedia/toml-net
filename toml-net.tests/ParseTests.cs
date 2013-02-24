@@ -48,6 +48,7 @@
             var config = "foo=1".ParseAsToml();
 
             Assert.AreEqual(1, config.foo);
+            Assert.IsInstanceOf<long>(config.foo);
         }
 
         [Test]
@@ -103,7 +104,7 @@
         {
             var config = "foo=[1, 2, 3]".ParseAsToml();
 
-            Assert.IsTrue(new[] { 1, 2, 3 }.SequenceEqual((int[])config.foo));
+            Assert.IsTrue(new[] { 1L, 2, 3 }.SequenceEqual((long[])config.foo));
         }
 
         [Test]

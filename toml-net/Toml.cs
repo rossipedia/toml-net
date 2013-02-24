@@ -39,7 +39,7 @@
 
         private static readonly Dictionary<Regex, Func<string, object>> ParserMap = new Dictionary<Regex, Func<string, object>>
         {
-            { IntValueExpression, s => int.Parse(s) },
+            { IntValueExpression, s => long.Parse(s) },
             { FloatValueExpression, s => double.Parse(s) },
             { BoolValueExpression, s => bool.Parse(s) },
             { DateTimeValueExpression, s => DateTime.ParseExact(
