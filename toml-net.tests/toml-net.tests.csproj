@@ -47,6 +47,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <EmbeddedResource Include="Resources\example.toml" />
     <None Include="Settings.StyleCop" />
   </ItemGroup>
   <ItemGroup>
