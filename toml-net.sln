@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "toml-net", "toml-net\toml-net.csproj", "{14C274AA-97D6-4D63-9316-ADC4ABE982DD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "toml-net.tests", "toml-net.tests\toml-net.tests.csproj", "{9677FEA4-EE5C-402A-80A1-062332C1EEBD}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{14C274AA-97D6-4D63-9316-ADC4ABE982DD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{14C274AA-97D6-4D63-9316-ADC4ABE982DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{14C274AA-97D6-4D63-9316-ADC4ABE982DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{14C274AA-97D6-4D63-9316-ADC4ABE982DD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9677FEA4-EE5C-402A-80A1-062332C1EEBD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9677FEA4-EE5C-402A-80A1-062332C1EEBD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9677FEA4-EE5C-402A-80A1-062332C1EEBD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9677FEA4-EE5C-402A-80A1-062332C1EEBD}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
