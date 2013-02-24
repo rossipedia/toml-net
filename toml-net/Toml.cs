@@ -36,22 +36,22 @@
                 return Parse(reader);
             }
         }
-        
+
         private static readonly Dictionary<Regex, Func<string, object>> ParserMap = new Dictionary<Regex, Func<string, object>>
         {
             { IntValueExpression, s => int.Parse(s) },
             { FloatValueExpression, s => double.Parse(s) },
             { BoolValueExpression, s => bool.Parse(s) },
             { DateTimeValueExpression, s => DateTime.ParseExact(
-                s, 
-                "yyyy-MM-ddTHH:mm:ssZ", 
-                CultureInfo.InvariantCulture, 
+                s,
+                "yyyy-MM-ddTHH:mm:ssZ",
+                CultureInfo.InvariantCulture,
                 DateTimeStyles.AssumeUniversal | DateTimeStyles.AdjustToUniversal) },
             { StringValueExpression, ParseStringValue },
             { ArrayValueExpression, ParseArrayValue }
         };
 
-        internal static dynamic Parse(TextReader reader)
+        public static dynamic Parse(TextReader reader)
         {
             var rootConfig = (IDictionary<string, object>)new ExpandoObject();
             var current = rootConfig;
