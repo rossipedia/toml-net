@@ -5,7 +5,12 @@ This is a sample parser in C# for Tom Preson-Werner's ([@mojombo][1]) TOML marku
 
 The code's not the prettiest, but it successfully parses the sample file.
 
+Note: This sample is based off of commit #9459648345 of Tom's TOML
+spec.
+
+
 [1]: http://github.com/mojombo
+[2]: https://github.com/mojombo/toml/tree/94596483455d226dacc5b4320bd6992604d97713
 
 USAGE:
 ------
