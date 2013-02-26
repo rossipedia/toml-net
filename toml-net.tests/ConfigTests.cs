@@ -8,7 +8,7 @@
 
     [TestFixture]
     [Ignore("Restructuring")]
-    public class ParseTests
+    public class ConfigTests
     {
         [Test]
         public void NonNullStringShouldReturnNonNullConfig()
@@ -204,7 +204,7 @@
 
         private static dynamic ParseEmbeddedSampleTomlFile()
         {
-            var s = typeof(ParseTests).Assembly.GetManifestResourceStream("Toml.Tests.Resources.example.toml");
+            var s = typeof(ConfigTests).Assembly.GetManifestResourceStream("Toml.Tests.Resources.example.toml");
             using (var reader = new StreamReader(s))
             {
                 return reader.ParseAsToml();
