@@ -55,5 +55,4 @@ TODO:
 
 [1]: http://github.com/mojombo
 [2]: https://github.com/mojombo/toml/commit/8a7c1bf27fa13b6c381b3bc806df7f5c0add95da
-: a13b6c381b3bc806df7f5c0add95da
-[2]: https://github.com/mojombo/toml
+[3]: https://github.com/mojombo/toml
