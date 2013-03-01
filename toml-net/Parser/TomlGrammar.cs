@@ -220,40 +220,6 @@
 
         public static readonly Parser<IEnumerable<Section>> SectionList = Section.Sequence(ItemSeparator.AsToken(true), true);
 
-        //public static readonly Parser<string> StrippedLine = from parts in
-        //                                                         (from pre in Parse.AnyChar.Except(Quote.Or(CommentStart).Or(Eol)).Many().Text()
-        //                                                          from rawstring in EscapedQuotedString.Once().Or(RawKeyGroup).Optional()
-        //                                                          select pre + rawstring).Many()
-        //                                                     from tail in Parse.AnyChar.Except(CommentStart.Or(Eol)).Many().Text()
-        //                                                     from comment in
-        //                                                         (from c in CommentStart
-        //                                                          from commentText in Parse.AnyChar.Except(Eol).Many()
-        //                                                          select string.Empty).Optional()
-        //                                                     select string.Join("", parts);
-
-        //public static readonly Parser<string> CommentStripper = from lines in StrippedLine.Sequence(ItemSeparator.AtLeastOnce(), true)
-        //                                                        select string.Join("\n", lines.Where(l => l.Trim().Length > 0));
-
-        //public static Parser<T> CommentStripped<T>(this Parser<T> parser)
-        //{
-        //    if (parser == null)
-        //    {
-        //        throw new ArgumentNullException("parser");
-        //    }
-
-        //    return i =>
-        //    {
-        //        // Strip first
-        //        var result = CommentStripper(i);
-        //        if (!result.WasSuccessful)
-        //        {
-        //            return Result.Failure<T>(i, "Could not remove comments", new string[0]);
-        //        }
-
-        //        return parser(new Input(result.Value));
-        //    };
-        //}
-
         public static readonly Parser<Document> Document = (from rootValues in KeyValueList.AsToken(true)
                                                             from sections in SectionList.AsToken(true)
                                                             select new Document(rootValues, sections)).End();
