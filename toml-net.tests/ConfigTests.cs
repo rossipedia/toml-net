@@ -1,13 +1,13 @@
 ﻿namespace Toml.Tests
 {
     using System;
+    using System.Collections.Generic;
     using System.IO;
     using System.Linq;
 
     using NUnit.Framework;
 
     [TestFixture]
-    [Ignore("Restructuring")]
     public class ConfigTests
     {
         [Test]
@@ -122,7 +122,7 @@
         {
             var config = "foo=[1, 2, 3]".ParseAsToml();
 
-            Assert.IsTrue(new[] { 1L, 2, 3 }.SequenceEqual((long[])config.foo));
+            Assert.IsTrue(new object[] { 1L, 2L, 3L }.SequenceEqual((object[])config.foo));
         }
 
         [Test]
@@ -130,7 +130,7 @@
         {
             var config = "foo=[1.1, 2.2, 3.3]".ParseAsToml();
 
-            Assert.IsTrue(new[] { 1.1, 2.2, 3.3 }.SequenceEqual((double[])config.foo));
+            Assert.IsTrue(new object[] { 1.1, 2.2, 3.3 }.SequenceEqual((object[])config.foo));
         }
 
         [Test]
@@ -138,7 +138,7 @@
         {
             var config = "foo=[\"foo\", \"bar\"]".ParseAsToml();
 
-            Assert.IsTrue(new[] { "foo", "bar" }.SequenceEqual((string[])config.foo));
+            Assert.IsTrue(new object[] { "foo", "bar" }.SequenceEqual((object[])config.foo));
         }
 
 
@@ -147,7 +147,7 @@
         {
             var config = "foo=[true, false]".ParseAsToml();
 
-            Assert.IsTrue(new[] { true, false }.SequenceEqual((bool[])config.foo));
+            Assert.IsTrue(new object[] { true, false }.SequenceEqual((object[])config.foo));
         }
 
         [Test]
@@ -155,12 +155,12 @@
         {
             var config = "foo=[2013-02-24T01:13:00Z, 2013-01-30T22:30:15Z]".ParseAsToml();
 
-            var expected = new[]
+            var expected = new object[]
             {
                 new DateTime(2013, 02, 24, 01, 13, 00, DateTimeKind.Utc), 
                 new DateTime(2013, 01, 30, 22, 30, 15, DateTimeKind.Utc)
             };
-            Assert.IsTrue(expected.SequenceEqual((DateTime[])config.foo));
+            Assert.IsTrue(expected.SequenceEqual((object[])config.foo));
         }
 
         [Test]
@@ -174,7 +174,7 @@
         [Test]
         public void ShouldParseSampleConfig()
         {
-            var config = ParseEmbeddedSampleTomlFile();
+            var config = Resources.LoadEmbeddedSampleTomlFile().ParseAsToml();
 
             Assert.NotNull(config);
             Assert.AreEqual("TOML Example", config.title);
@@ -187,7 +187,7 @@
 
             Assert.NotNull(config.database);
             Assert.AreEqual("192.168.1.1", config.database.server);
-            Assert.IsTrue(new[] { "8001", "8001", "8002" }.SequenceEqual((string[])config.database.ports));
+            Assert.IsTrue(new object[] { 8001L, 8001L, 8002L }.SequenceEqual((object[])config.database.ports));
             Assert.AreEqual(5000, config.database.connection_max);
             Assert.IsTrue((bool)config.database.enabled);
 
@@ -202,13 +202,32 @@
             Assert.AreEqual("eqdc10", config.servers.beta.dc);
         }
 
-        private static dynamic ParseEmbeddedSampleTomlFile()
+        [Test]
+        public void ShouldParseHardConfig()
         {
-            var s = typeof(ConfigTests).Assembly.GetManifestResourceStream("Toml.Tests.Resources.example.toml");
-            using (var reader = new StreamReader(s))
-            {
-                return reader.ParseAsToml();
-            }
+            var config = Resources.LoadEmbeddedHardTomlFile().ParseAsToml();
+            Assert.NotNull(config);
+
+            Assert.AreEqual("You'll hate me after this - #", config.the.test_string);
+            Assert.NotNull(config.the.hard);
+            Assert.IsTrue(new object[] { "] ", " # " }.SequenceEqual((object[])config.the.hard.test_array));
+            Assert.IsTrue(new object[] { "Test #11 ]proved that", "Experiment #9 was a success" }.SequenceEqual((object[])config.the.hard.test_array2));
+            Assert.AreEqual(" Same thing, but with a string #", config.the.hard.another_test_string);
+            Assert.AreEqual(" And when \"'s are in the string, along with # \"", config.the.hard.harder_test_string);
+            var dict = (IDictionary<string, object>)config.the.hard;
+            Assert.NotNull(dict["bit#"]);
+            dynamic thehardbit = dict["bit#"];
+            var harddict = (IDictionary<string, object>)thehardbit;
+            Assert.AreEqual(harddict["what?"], "You don't think some user won't do that?");
+
+            Assert.IsTrue(new object[] { "]" }.SequenceEqual((object[])thehardbit.multi_line_array));
+        }
+
+        [Test]
+        public void DuplicateKeysShouldThrow()
+        {
+            var config = "[test]\nfoo=\"bar\"\n[test.foo]\nshaz=0";
+            Assert.Throws<FormatException>(() => config.ParseAsToml());
         }
     }
 }
