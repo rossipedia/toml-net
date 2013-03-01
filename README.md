@@ -5,44 +5,55 @@ This is a sample parser in C# for Tom Preson-Werner's ([@mojombo][1]) TOML marku
 
 The code's not the prettiest, but it successfully parses the sample file.
 
-Note: This sample is based off of commit #9459648345 of Tom's TOML
-spec.
-
-
-[1]: http://github.com/mojombo
-[2]: https://github.com/mojombo/toml/tree/94596483455d226dacc5b4320bd6992604d97713
+This sample is based off of commit [#8a7c1bf27f][2] of Tom's TOML spec.
 
 USAGE:
 ------
 
-If you have your doc in a string variable, simply call the `ParseAsToml` extension method:
+This library exposes two methods: the static `Toml.Parse(string)` and extension method `str.ParseAsToml()`.
 
-```c#
-string toml = ...;
-dynamic config = toml.ParseAsToml();
-// Alternative:
-dynamic config = Toml.ParseString(toml);
+Both return a `dynamic` (really an `ExpandoObject` underneath),
+that is the hash produced by parsing the string.
+
+See the [TOML spec][3] for clarification on this language.
+
+EXAMPLE:
+--------
+
+With the following in `config.toml`:
+
+``` toml
+[database]
+server = "192.168.1.1"
+ports = [ 8001, 8001, 8002 ]
+connection_max = 5000
+enabled = true
 ```
 
-There are also extensions methods for `System.IO.FileInfo` and `System.IO.TextWriter` with the same signature as well:
+You can access this config like so:
 
-```c#
-var file = new FileInfo(...);
-dynamic config = file.ParseAsToml();
-// or
-dynamic config = Toml.ParseFile(pathToFile);
 
-using(var reader = File.OpenRead(...))
-{
-	dynamic config = reader.ParseAsToml();
-    // or
-    dynamic config = Toml.Parse(reader);
-}
+``` c#
+var config = File.ReadAllText("config.toml");
+string dbServer = config.database.server;
+object[] ports = config.database.ports;
+int maxConn = config.database.connection_max;
 ```
+
+###Note:
+Arrays have to be implemented as arrays of objects, because per the
+spec they can contain not only single elements like an int or
+DateTime, they can also hold other arrays of different types.
+
 
 TODO:
 -----
-* Implement support for nested arrays
-* Refactor, refactor, refactor
-* More tests
-* Package up as a nuget file
+- [ ] Package up as a nuget file
+- [ ] Fix up parser to support streaming
+
+
+
+[1]: http://github.com/mojombo
+[2]: https://github.com/mojombo/toml/commit/8a7c1bf27fa13b6c381b3bc806df7f5c0add95da
+: a13b6c381b3bc806df7f5c0add95da
+[2]: https://github.com/mojombo/toml

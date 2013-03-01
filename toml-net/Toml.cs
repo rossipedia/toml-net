@@ -3,7 +3,6 @@
     using System;
     using System.Collections.Generic;
     using System.Dynamic;
-    using System.IO;
 
     using Sprache;
 
@@ -14,16 +13,6 @@
         public static dynamic ParseAsToml(this string str)
         {
             return Parse(str);
-        }
-
-        public static dynamic ParseAsToml(this TextReader reader)
-        {
-            return Parse(reader.ReadToEnd());
-        }
-
-        public static dynamic ParseFile(string filePath)
-        {
-            return Parse(File.ReadAllText(filePath));
         }
 
         public static dynamic Parse(string str)
