@@ -56,7 +56,7 @@
                     throw new FormatException(message);
                 }
 
-                current = (IDictionary<string, object>)next;
+                current = next.AsDict();
             }
 
             return current;
