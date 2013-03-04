@@ -56,7 +56,7 @@
                     throw new FormatException(message);
                 }
 
-                current = next.AsDict();
+                current = ((ExpandoObject)next).AsDict();
             }
 
             return current;
