@@ -6,7 +6,7 @@
 
     using Sprache;
 
-    using global::Toml.Parser;
+    using Parser;
 
     public static class Toml
     {
