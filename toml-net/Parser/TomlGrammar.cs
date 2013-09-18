@@ -110,17 +110,17 @@
 
         private static readonly Dictionary<string, string> ValidEscapes = new Dictionary<string, string>
         {
-            { "\\0", "\0" },
-            { "\\t", "\t" },
-            { "\\n", "\n" },
-            { "\\r", "\r" },
-            { "\\\"", "\"" }
+            { @"\0", "\0" },
+            { @"\t", "\t" },
+            { @"\n", "\n" },
+            { @"\r", "\r" },
+            { @"\""", "\"" },
         };
 
         private static string Unescape(this string raw)
         {
-            var unescaped = Regex.Replace(raw, @"\\[0tnr""]", m => ValidEscapes[m.Value]);
-            var invalid = Regex.Match(unescaped, @"\\[^\\]");
+            var unescaped = Regex.Replace(raw, @"(?<!\\)\\[0tnr""]", m => ValidEscapes[m.Value]);
+            var invalid = Regex.Match(unescaped, @"(?<!\\)\\[^\\]");
             if (invalid.Success)
             {
                 throw new ParseException("Invalid Escape sequence: " + invalid.Value);

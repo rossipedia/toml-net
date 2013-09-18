@@ -402,6 +402,15 @@ foo = ""bar""  #test
         }
 
         [Test]
+        public void CanParseStringWithEscapedBackslashes()
+        {
+            // https://github.com/rossipedia/toml-net/issues/5
+            var input = "\"C:\\\\temp\\\\this.txt\"";
+            var result = TomlGrammar.StringVal.Parse(input);
+            Assert.AreEqual("C:\\temp\\this.txt", result);
+        }
+
+        [Test]
         public void CanParseWhitespace()
         {
             var input = "\t\t\t   ";
