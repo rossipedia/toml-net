@@ -394,6 +394,15 @@ foo = ""bar""  #test
         }
 
         [Test]
+        public void CanParseStringWithEscapedUnicode()
+        {
+            // Sample taken from: https://github.com/rossipedia/toml/blob/master/versions/toml-v0.1.0.md
+            var input = @"""I'm a string. \""You can quote me\"". Name\tJos\u00E9\nLocation\tSF.""";
+            var result = TomlGrammar.StringVal.Parse(input);
+            Assert.AreEqual("I'm a string. \"You can quote me\". Name\tJos\u00E9\nLocation\tSF.", result);
+        }
+
+        [Test]
         public void CanParseStringWithEscapedQuotes()
         {
             var input = "\"foo \\\"bar\\\" fizz \\\"buzz\\\"\"";

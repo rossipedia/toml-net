@@ -120,6 +120,15 @@
         private static string Unescape(this string raw)
         {
             var unescaped = Regex.Replace(raw, @"(?<!\\)\\[0tnr""]", m => ValidEscapes[m.Value]);
+
+            // Unicode
+            unescaped = Regex.Replace(unescaped, @"(?<!\\)\\u([A-Fa-f0-9]{4})", m =>
+            {
+                var intval = int.Parse(m.Groups[1].Value, NumberStyles.HexNumber);
+                var charval = Convert.ToChar(intval);
+                return charval.ToString();
+            });
+
             var invalid = Regex.Match(unescaped, @"(?<!\\)\\[^\\]");
             if (invalid.Success)
             {
