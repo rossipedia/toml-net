@@ -48,7 +48,6 @@ DateTime, they can also hold other arrays of different types.
 
 TODO:
 -----
-- [ ] Package up as a nuget file
 - [ ] Fix up parser to support streaming
 
 
